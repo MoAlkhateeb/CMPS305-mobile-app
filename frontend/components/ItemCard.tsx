@@ -1,29 +1,54 @@
-import { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export function ItemCard() {
-  const [Items, ItemsState] = useState();
+interface ItemCardProps {
+  name: String;
+  description: String;
+}
 
+export function ItemCard({ name, description }: ItemCardProps) {
   return (
     <View style={styles.container}>
-      <View style={styles.box1}>
-        <Text>Tomato</Text>
-      </View>
+      <Text id="ItemName" style={styles.TextName}>
+        {name}
+      </Text>
+      <Text id="ItemDescription" style={styles.TextDescription}>
+        {description}
+      </Text>
+      <TouchableOpacity style={styles.AddButton} onPress={() => {}}>
+        <Text style={styles.AddButtonText}>Add To Cart</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 10,
-      backgroundColor: '#f0f0f0',
-    },
-    box1: {
-      flex: 1,
-      width: '100%',
-      backgroundColor: '#4CAF50',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-  });
+  container: {
+    width: "50%",
+    height: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e6ffff",
+  },
+  TextName: {
+    fontSize: 40,
+    fontWeight: "900",
+  },
+  TextDescription: {
+    fontSize: 25,
+    fontWeight: "100",
+    marginBottom: 20,
+  },
+  AddButton: {
+    width: "50%",
+    height: "10%",
+    backgroundColor: "#00cc99",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#33adff",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  AddButtonText: {
+    color: "#fff",
+  },
+});
