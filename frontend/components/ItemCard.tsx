@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 interface ItemCardProps {
+  addToBasket: () => void;
   name: String;
   description: String;
 }
 
-export function ItemCard({ name, description }: ItemCardProps) {
+export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
   return (
     <View style={styles.container}>
       <Text id="ItemName" style={styles.TextName}>
@@ -15,7 +16,12 @@ export function ItemCard({ name, description }: ItemCardProps) {
       <Text id="ItemDescription" style={styles.TextDescription}>
         {description}
       </Text>
-      <TouchableOpacity style={styles.AddButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.AddButton}
+        onPress={() => {
+          addToBasket();
+        }}
+      >
         <Text style={styles.AddButtonText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
@@ -24,7 +30,7 @@ export function ItemCard({ name, description }: ItemCardProps) {
 const styles = StyleSheet.create({
   container: {
     width: "50%",
-    height: "60%",
+    height: "30%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e6ffff",
