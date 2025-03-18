@@ -31,19 +31,24 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
       >
         <Text>Basket</Text>
       </TouchableOpacity>
-      {items.map((item) => (
-        <ItemCard
-          key={item.id}
-          addToBasket={() => addToBasket(item)}
-          name={item.name}
-          description={item.description}
-        />
-      ))}
+      <ScrollView contentContainerStyle={styles.container}>
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            addToBasket={() => addToBasket(item)}
+            name={item.name}
+            description={item.description}
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexWrap: "wrap",
+  },
   BasketButton: {
     backgroundColor: "#33cccc",
     width: 75,

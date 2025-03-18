@@ -2,6 +2,7 @@ import { Button } from "@react-navigation/elements";
 import { DIRECTION_RIGHT } from "hammerjs";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useBasket } from "@/context/basketcontext";
 
 interface BasketCardProps {
   removeFromBasket: (name: String) => void;
@@ -32,7 +33,8 @@ export function BasketItem({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 6,
+    margin: 5,
     backgroundColor: "#e6ffff",
     flexDirection: "row",
     justifyContent: "space-between",

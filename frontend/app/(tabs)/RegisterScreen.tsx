@@ -29,7 +29,6 @@ export default function RegisterScreen({ navigation }: { navigation: any }) {
     } else if (password == "") {
       alert("Kindly provide a password!");
     } else {
-      alert("Await the API man");
       await fetch(Host + "/register", {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },

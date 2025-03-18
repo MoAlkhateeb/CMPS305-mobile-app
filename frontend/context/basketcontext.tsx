@@ -10,12 +10,14 @@ interface BasketContextType {
   basket: Item[];
   addToBasket: (item: Item) => void;
   removeFromBasket: (name: string) => void;
-  clearBasket: () => void; 
+  clearBasket: () => void;
 }
 
 const BasketContext = createContext<BasketContextType | undefined>(undefined);
 
-export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [basket, setBasket] = useState<Item[]>([]);
 
   const addToBasket = (item: Item) => setBasket((prev) => [...prev, item]);
@@ -24,7 +26,9 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const clearBasket = () => setBasket([]);
 
   return (
-    <BasketContext.Provider value={{ basket, addToBasket, removeFromBasket, clearBasket }}>
+    <BasketContext.Provider
+      value={{ basket, addToBasket, removeFromBasket, clearBasket }}
+    >
       {children}
     </BasketContext.Provider>
   );

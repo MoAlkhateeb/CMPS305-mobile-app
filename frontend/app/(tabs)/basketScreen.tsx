@@ -2,22 +2,24 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { BasketItem } from "@/components/basketItem";
 import { useBasket } from "@/context/basketcontext";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function BasketScreen() {
   const { basket, removeFromBasket } = useBasket(); // Use context for basket management
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Basket</Text>
       {basket.length > 0 ? (
-        basket.map((item) => (
-          <BasketItem
-            key={item.id}
-            name={item.name}
-            description={item.description}
-            removeFromBasket={() => removeFromBasket}
-          />
-        ))
+        <ScrollView>
+          {basket.map((item) => (
+            <BasketItem
+              key={item.id}
+              name={item.name}
+              description={item.description}
+              removeFromBasket={()=>removeFromBasket(item.name)}
+            />
+          ))}
+        </ScrollView>
       ) : (
         <Text style={styles.emptyText}>Your basket is empty!</Text>
       )}

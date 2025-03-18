@@ -25,8 +25,8 @@ export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
 const styles = StyleSheet.create({
   container: {
     width: "45%",
-    height: "10%",
-    margin:10,
+    height: "15%",
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e6ffff",

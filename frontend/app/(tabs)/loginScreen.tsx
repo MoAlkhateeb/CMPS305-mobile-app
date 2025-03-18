@@ -30,7 +30,6 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     } else if (password == "") {
       alert("Kindly provide a password!");
     } else {
-      alert("Await the API man");
       await fetch(Host + "/login", {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
