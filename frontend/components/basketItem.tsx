@@ -3,14 +3,27 @@ import { DIRECTION_RIGHT } from "hammerjs";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export function BasketItem() {
+interface BasketCardProps {
+  removeFromBasket: (name: String) => void;
+  name: String;
+  description: String;
+}
+
+export function BasketItem({
+  removeFromBasket,
+  name,
+  description,
+}: BasketCardProps) {
   return (
     <SafeAreaView style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.itemName}>Name</Text>
-        <Text style={styles.itemDescription}>Description</Text>
+        <Text style={styles.itemName}>{name}</Text>
+        <Text style={styles.itemDescription}>{description}</Text>
       </SafeAreaView>
-      <TouchableOpacity onPress={() => {}} style={styles.removeButton}>
+      <TouchableOpacity
+        onPress={() => removeFromBasket(name)}
+        style={styles.removeButton}
+      >
         <Text>X</Text>
       </TouchableOpacity>
     </SafeAreaView>

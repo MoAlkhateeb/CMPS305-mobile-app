@@ -8,8 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-export default function LoginScreen() {
-  const navigate = useNavigation();
+export default function LoginScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,15 +21,17 @@ export default function LoginScreen() {
       alert("Kindly provide a password!");
     } else {
       alert("Await the API man");
-      await fetch("192.168.134.142:8080/login", {
+      await fetch("localhost:8080/login", {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify({ username: username, password: password }),
       })
         .then((res) => {
-          console.log(res.json);
+          navigation.navigate("items");
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          navigation.navigate("items");
+        });
     }
   }
 

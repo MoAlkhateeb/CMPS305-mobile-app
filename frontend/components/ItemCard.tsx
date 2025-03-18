@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 interface ItemCardProps {
@@ -18,15 +17,14 @@ export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
       </Text>
       <TouchableOpacity
         style={styles.AddButton}
-        onPress={() => {
-          addToBasket();
-        }}
+        onPress={addToBasket}
       >
         <Text style={styles.AddButtonText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     width: "50%",

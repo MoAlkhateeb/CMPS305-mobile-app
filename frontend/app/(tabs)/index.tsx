@@ -4,31 +4,29 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { BasketItem } from "@/components/basketItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ItemScreen from "./itemScreen";
-import { NavigationContainer } from "@react-navigation/native";
-import LoginScreen from "@/components/loginScreen";
-import basketScreen from "./basket";
+import BasketScreen from "./basketScreen";
 import { title } from "process";
+import LoginScreen from "./loginScreen";
 const Stack = createStackNavigator();
 
-export default function HomeScreen() {
+export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ title: "", headerShown: false }}
-        />
-        <Stack.Screen
-          name="items"
-          component={ItemScreen}
-          options={{ title: "items", headerShown: true }}
-        />
-        <Stack.Screen
-          name="basket"
-          component={basketScreen}
-          options={{ title: 'basket' headerShown: true}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ title: "", headerShown: false }}
+      />
+      <Stack.Screen
+        name="items"
+        component={ItemScreen}
+        options={{ title: "items", headerShown: true }}
+      />
+      <Stack.Screen
+        name="basket"
+        component={BasketScreen}
+        options={{ title: "basket", headerShown: true }}
+      />
+    </Stack.Navigator>
   );
 }
