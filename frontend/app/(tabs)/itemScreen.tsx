@@ -1,35 +1,33 @@
-import { useState, useEffect } from "react";
-import { ItemCard } from "@/components/ItemCard";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { ItemCard } from "@/components/ItemCard";
+import { useBasket } from "@/context/basketcontext";
+import { Host } from ".";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Item {
   id: number;
-  name: String;
-  description: String;
+  name: string;
+  description: string;
 }
 
 export default function ItemScreen({ navigation }: { navigation: any }) {
+  const { addToBasket } = useBasket();
   const [items, setItems] = useState<Item[]>([]);
-  const [basket, setBasket] = useState<Item[]>([]);
 
   useEffect(() => {
-    fetch("http:/localhost:8080/items")
+    fetch(Host + "/items")
       .then((res) => res.json())
       .then((json) => setItems(json))
       .catch((err) => console.log(err));
   }, []);
 
-  const addToBasket = (item: Item) => {
-    setBasket((prevBasket) => [...prevBasket, item]);
-  };
-
   return (
-    <View>
+    <SafeAreaView>
       <TouchableOpacity
         style={styles.BasketButton}
-        onPress={() => {
-          navigation.navigate("basket", { basket });
-        }}
+        onPress={() => navigation.navigate("basket")}
       >
         <Text>Basket</Text>
       </TouchableOpacity>
@@ -41,7 +39,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
           description={item.description}
         />
       ))}
-    </View>
+    </SafeAreaView>
   );
 }
 

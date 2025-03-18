@@ -1,18 +1,17 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useState, useEffect } from "react";
-import { useBasket } from "@/context/basketcontext";
 import {
-  Text,
+  View,
   TextInput,
   TouchableHighlight,
-  TouchableOpacity,
-  View,
+  Text,
   StyleSheet,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { Host } from ".";
+import { useBasket } from "@/context/basketcontext";
 import { useFocusEffect } from "expo-router";
 
-export default function LoginScreen({ navigation }: { navigation: any }) {
+export default function RegisterScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,7 +21,7 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     clearBasket();
   }, [isFocused]);
 
-  async function signIn() {
+  async function register() {
     if (username == "" && password == "") {
       alert("Kindly provide any info!");
     } else if (username == "") {
@@ -31,7 +30,7 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
       alert("Kindly provide a password!");
     } else {
       alert("Await the API man");
-      await fetch(Host + "/login", {
+      await fetch(Host + "/register", {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify({ username: username, password: password }),
@@ -71,19 +70,12 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
         onChangeText={setPassword}
         style={styles.text}
       ></TextInput>
-      <TouchableHighlight onPress={signIn} style={styles.submit}>
+      <TouchableHighlight onPress={register} style={styles.submit}>
         <Text>Login</Text>
       </TouchableHighlight>
-      <TouchableOpacity
-        style={styles.Register}
-        onPress={() => navigation.navigate("Register")}
-      >
-        <Text>Join Now</Text>
-      </TouchableOpacity>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -15,10 +15,7 @@ export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
       <Text id="ItemDescription" style={styles.TextDescription}>
         {description}
       </Text>
-      <TouchableOpacity
-        style={styles.AddButton}
-        onPress={addToBasket}
-      >
+      <TouchableOpacity style={styles.AddButton} onPress={addToBasket}>
         <Text style={styles.AddButtonText}>Add To Cart</Text>
       </TouchableOpacity>
     </View>
@@ -27,8 +24,9 @@ export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "50%",
-    height: "30%",
+    width: "45%",
+    height: "10%",
+    margin:10,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e6ffff",
@@ -44,7 +42,7 @@ const styles = StyleSheet.create({
   },
   AddButton: {
     width: "50%",
-    height: "10%",
+    height: "15%",
     backgroundColor: "#00cc99",
     borderWidth: 1,
     borderRadius: 10,

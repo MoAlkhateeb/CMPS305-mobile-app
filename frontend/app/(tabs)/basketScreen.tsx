@@ -1,21 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { BasketItem } from "@/components/basketItem"; // Import your BasketItem component
+import { BasketItem } from "@/components/basketItem";
+import { useBasket } from "@/context/basketcontext";
 
-interface Item {
-  id: number;
-  name: String;
-  description: String;
-}
-
-export default function BasketScreen({ route }: { route: any }) {
-  const [basket, setBasket] = useState<Item[]>(route.params.basket || []);
-
-  const removeFromBasket = (name: String) => {
-    setBasket((prevBasket) =>
-      prevBasket.filter((item) => item.name !== name)
-    );
-  };
+export default function BasketScreen() {
+  const { basket, removeFromBasket } = useBasket(); // Use context for basket management
 
   return (
     <View style={styles.container}>
@@ -26,7 +15,7 @@ export default function BasketScreen({ route }: { route: any }) {
             key={item.id}
             name={item.name}
             description={item.description}
-            removeFromBasket={removeFromBasket}
+            removeFromBasket={() => removeFromBasket}
           />
         ))
       ) : (
