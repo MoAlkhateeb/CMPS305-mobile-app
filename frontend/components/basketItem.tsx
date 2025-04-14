@@ -1,8 +1,5 @@
-import { Button } from "@react-navigation/elements";
-import { DIRECTION_RIGHT } from "hammerjs";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useBasket } from "@/context/basketcontext";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
 import { useState } from "react";
 

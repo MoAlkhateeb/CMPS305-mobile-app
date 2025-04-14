@@ -6,10 +6,9 @@ import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
 import checkoutScreen from "./cardInfoScreen";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { useState } from "react";
 const Stack = createStackNavigator();
 
-export const Host = "http:/192.168.1.122:8080";
+export const Host = "http://192.168.1.108:8080";
 export const paymentKey = process.env.EXPO_PUBLIC_STRIPE_KEY;
 
 export default function App() {
