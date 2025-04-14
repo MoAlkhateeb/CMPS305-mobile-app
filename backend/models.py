@@ -16,6 +16,7 @@ class Item(Base):
     id = Column(Integer, autoincrement=True, primary_key=True, nullable=False)
 
     name = Column(String, unique=True, nullable=False)
+    price = Column(Integer, nullable=False)
     description = Column(String, nullable=True)
 
 
