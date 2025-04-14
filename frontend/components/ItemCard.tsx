@@ -14,10 +14,14 @@ export function ItemCard({
   description,
   price,
 }: ItemCardProps) {
+  const itemprice = price / 100.0;
   return (
     <View style={styles.container}>
       <Text id="ItemName" style={styles.TextName}>
         {name}
+      </Text>
+      <Text id="ItemPrice" style={styles.ItemPrice}>
+        {itemprice}$
       </Text>
       <Text id="ItemDescription" style={styles.TextDescription}>
         {description}
@@ -31,20 +35,20 @@ export function ItemCard({
 
 const styles = StyleSheet.create({
   container: {
-    width: "45%",
-    height: "15%",
+    width: 200,
+    height: 200,
     margin: 10,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e6ffff",
   },
   TextName: {
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "900",
   },
   TextDescription: {
-    fontSize: 25,
-    fontWeight: "100",
+    fontSize: 20,
+    fontWeight: "300",
     marginBottom: 20,
   },
   AddButton: {
@@ -59,5 +63,9 @@ const styles = StyleSheet.create({
   },
   AddButtonText: {
     color: "#fff",
+    padding: 5,
+  },
+  ItemPrice: {
+    fontWeight: 700,
   },
 });

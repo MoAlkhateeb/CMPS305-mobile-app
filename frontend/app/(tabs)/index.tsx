@@ -1,45 +1,49 @@
-import { Component, useState } from "react";
-import { ItemCard } from "@/components/ItemCard";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { BasketItem } from "@/components/basketItem";
 import { createStackNavigator } from "@react-navigation/stack";
 import ItemScreen from "./itemScreen";
 import BasketScreen from "./basketScreen";
-import { title } from "process";
 import { BasketProvider } from "@/context/basketcontext";
 import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
-import dotenv from "dotenv";
+import checkoutScreen from "./cardInfoScreen";
+import { StripeProvider } from "@stripe/stripe-react-native";
+import { useState } from "react";
 const Stack = createStackNavigator();
 
-export const Host = "http:/192.168.1.133:8000";
+export const Host = "http:/192.168.1.122:8080";
 export const paymentKey = process.env.EXPO_PUBLIC_STRIPE_KEY;
 
 export default function App() {
   return (
-    <BasketProvider>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ title: "", headerShown: false }}
-        />
-        <Stack.Screen
-          name="items"
-          component={ItemScreen}
-          options={{ title: "items", headerShown: true }}
-        />
-        <Stack.Screen
-          name="basket"
-          component={BasketScreen}
-          options={{ title: "basket", headerShown: true }}
-        />
-        <Stack.Screen
-          name="Register"
-          component={RegisterScreen}
-          options={{ title: "Register", headerShown: true }}
-        />
-      </Stack.Navigator>
-    </BasketProvider>
+    <StripeProvider publishableKey={paymentKey!}>
+      <BasketProvider>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ title: "", headerShown: false }}
+          />
+          <Stack.Screen
+            name="items"
+            component={ItemScreen}
+            options={{ title: "items", headerShown: true }}
+          />
+          <Stack.Screen
+            name="basket"
+            component={BasketScreen}
+            options={{ title: "basket", headerShown: true }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{ title: "Register", headerShown: true }}
+          />
+          <Stack.Screen
+            name="checkout"
+            component={checkoutScreen}
+            options={{ title: "Checkout", headerShown: true }}
+          />
+        </Stack.Navigator>
+      </BasketProvider>
+    </StripeProvider>
   );
 }

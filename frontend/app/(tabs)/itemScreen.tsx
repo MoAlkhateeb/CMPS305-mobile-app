@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ItemCard } from "@/components/ItemCard";
 import { useBasket } from "@/context/basketcontext";
 import { Host } from ".";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
@@ -26,7 +26,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView>amount
       <TouchableOpacity
         style={styles.BasketButton}
         onPress={() => navigation.navigate("basket")}
@@ -41,6 +41,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
             name={item.name}
             description={item.description}
             price={item.price}
+            
           />
         ))}
       </ScrollView>
@@ -50,7 +51,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   container: {
-    height:50,
+    flexWrap:"wrap"
     
   },
   BasketButton: {

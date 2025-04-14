@@ -1,28 +1,51 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { useState } from "react";
+import {
+  Dimensions,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { BasketItem } from "@/components/basketItem";
 import { useBasket } from "@/context/basketcontext";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function BasketScreen() {
-  const { basket, removeFromBasket } = useBasket(); // Use context for basket management
-
+export default function BasketScreen({ navigation } : {navigation : any}) {
+  const { basket, removeFromBasket } = useBasket();
+  const screenWidth = Dimensions.get("window").width;
+  let getTotal = () => {
+    let total = 0;
+    basket.forEach((item) => (total += item.amount * item.price));
+    return total;
+  };
+  
   return (
     <View style={styles.container}>
       {basket.length > 0 ? (
-        <ScrollView>
-          {basket.map((item) => (
-            <BasketItem
-              key={item.id}
-              name={item.name}
-              price={item.price}
-              description={item.description}
-              removeFromBasket={() => removeFromBasket(item.name)}
-            />
-          ))}
-        </ScrollView>
+        <>
+          <ScrollView>
+            {basket.map((item) => (
+              <BasketItem
+                key={item.id}
+                name={item.name}
+                price={item.price}
+                description={item.description}
+                amount={item.amount}
+                removeFromBasket={() => removeFromBasket(item.name)}
+              />
+            ))}
+          </ScrollView>
+          <View style={[styles.totalcontainer, { width: screenWidth }]}>
+            <Text style={styles.totaltext}>Total:{getTotal() / 100}$</Text>
+            <TouchableOpacity style={styles.checkoutBtn}>
+              onPress = {navigation.navigate('cardInfo')}
+              <Text style={styles.checkoutText}>Proceed to Checkout</Text>
+            </TouchableOpacity>
+          </View>
+        </>
       ) : (
-        <Text style={styles.emptyText}>Your basket is empty!</Text>
+        <Text>Your basket is empty!</Text>
       )}
     </View>
   );
@@ -44,5 +67,27 @@ const styles = StyleSheet.create({
     color: "#888",
     textAlign: "center",
     marginTop: 20,
+  },
+  totalcontainer: {
+    width: "100%",
+  },
+  totaltext: {
+    fontWeight: 900,
+    fontSize: 20,
+  },
+  checkoutText:{
+    fontWeight: 800,
+    fontSize:15,
+    padding:2,
+    color:"#fff"
+  },
+  checkoutBtn:{
+    width:200,
+    backgroundColor: "#00cc99",
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent:"center",
+    alignItems:"center",
+    padding:4,
   },
 });
