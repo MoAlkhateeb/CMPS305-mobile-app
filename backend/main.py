@@ -1,6 +1,9 @@
+import os
 import jwt
 import bcrypt
 import uvicorn
+import stripe
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel, field_validator
 from sqlalchemy import select
@@ -8,10 +11,12 @@ from sqlalchemy import select
 from models import User, Item
 from db import session
 
+load_dotenv()
 
 SECRET_KEY = "secret-key"
 
 app = FastAPI()
+stripe.api_key = os.environ.get("SECRET_KEY")
 
 
 class UserRegister(BaseModel):
@@ -35,13 +40,45 @@ class TokenRequest(BaseModel):
     token: str
 
 
-class ItemRequest(BaseModel):
+class ItemSchema(BaseModel):
     name: str
+    price: float
     description: str
 
 
 def generate_jwt(user_id):
     return {"token": jwt.encode({"id": user_id}, SECRET_KEY, algorithm="HS256")}
+
+
+class PaymentIn(BaseModel):
+    amount: int
+
+
+class PaymentOut(BaseModel):
+    client_secret: str
+
+
+class Message(BaseModel):
+    message: str = "Price must be more than 10c"
+
+
+@app.post(
+    "/create-payment-intent",
+    responses={400: {"model": Message}},
+)
+def payment(payment_in: PaymentIn) -> PaymentOut:
+
+    if payment_in.amount < 10:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Price must be more than 10c",
+        )
+
+    intent = stripe.PaymentIntent.create(
+        amount=payment_in.amount, currency="usd", payment_method_types=["card"]
+    )
+
+    return {"client_secret": intent["client_secret"]}
 
 
 @app.post("/register")
@@ -110,9 +147,11 @@ def token(token_data: TokenRequest):
 
 
 @app.post("/items")
-def create_item(item_data: ItemRequest):
+def create_item(item_data: ItemSchema):
 
-    item = Item(name=item_data.name, description=item_data.description)
+    item = Item(
+        name=item_data.name, price=item_data.price, description=item_data.description
+    )
     session.add(item)
     session.commit()
 
@@ -120,7 +159,7 @@ def create_item(item_data: ItemRequest):
 
 
 @app.get("/items")
-def items():
+def items() -> list[ItemSchema]:
     query = select(Item)
     items = session.execute(query).all()
     return [item[0] for item in items]
