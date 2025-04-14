@@ -15,8 +15,9 @@ export default function BasketScreen() {
             <BasketItem
               key={item.id}
               name={item.name}
+              price={item.price}
               description={item.description}
-              removeFromBasket={()=>removeFromBasket(item.name)}
+              removeFromBasket={() => removeFromBasket(item.name)}
             />
           ))}
         </ScrollView>

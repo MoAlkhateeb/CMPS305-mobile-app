@@ -1,9 +1,11 @@
 import React, { createContext, useState, useContext } from "react";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 interface Item {
   id: number;
   name: string;
   description: string;
+  price: Float;
 }
 
 interface BasketContextType {
@@ -20,7 +22,11 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [basket, setBasket] = useState<Item[]>([]);
 
-  const addToBasket = (item: Item) => setBasket((prev) => [...prev, item]);
+  const addToBasket = (item: Item) => {
+    let exists = basket.find((basketItem) => basketItem == item);
+    if (exists == null) setBasket((prev) => [...prev, item]);
+    else return;
+  };
   const removeFromBasket = (name: string) =>
     setBasket((prev) => prev.filter((item) => item.name !== name));
   const clearBasket = () => setBasket([]);

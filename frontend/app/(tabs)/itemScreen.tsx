@@ -5,11 +5,13 @@ import { useBasket } from "@/context/basketcontext";
 import { Host } from ".";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 interface Item {
   id: number;
   name: string;
   description: string;
+  price: Float;
 }
 
 export default function ItemScreen({ navigation }: { navigation: any }) {
@@ -38,6 +40,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
             addToBasket={() => addToBasket(item)}
             name={item.name}
             description={item.description}
+            price={item.price}
           />
         ))}
       </ScrollView>
@@ -47,7 +50,8 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexWrap: "wrap",
+    height:50,
+    
   },
   BasketButton: {
     backgroundColor: "#33cccc",

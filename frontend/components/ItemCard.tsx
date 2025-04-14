@@ -1,12 +1,19 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Float } from "react-native/Libraries/Types/CodegenTypes";
 
 interface ItemCardProps {
   addToBasket: () => void;
   name: String;
   description: String;
+  price: Float;
 }
 
-export function ItemCard({ addToBasket, name, description }: ItemCardProps) {
+export function ItemCard({
+  addToBasket,
+  name,
+  description,
+  price,
+}: ItemCardProps) {
   return (
     <View style={styles.container}>
       <Text id="ItemName" style={styles.TextName}>

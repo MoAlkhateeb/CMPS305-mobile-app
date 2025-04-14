@@ -10,7 +10,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { Host } from ".";
-import { useFocusEffect } from "expo-router";
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");

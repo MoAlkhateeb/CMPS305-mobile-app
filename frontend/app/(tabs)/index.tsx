@@ -9,9 +9,11 @@ import { title } from "process";
 import { BasketProvider } from "@/context/basketcontext";
 import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
+import dotenv from "dotenv";
 const Stack = createStackNavigator();
 
-export const Host = "http:/192.168.1.108:8080";
+export const Host = "http:/192.168.1.133:8000";
+export const paymentKey = process.env.EXPO_PUBLIC_STRIPE_KEY;
 
 export default function App() {
   return (

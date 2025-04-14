@@ -9,7 +9,6 @@ import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Host } from ".";
 import { useBasket } from "@/context/basketcontext";
-import { useFocusEffect } from "expo-router";
 
 export default function RegisterScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
