@@ -4,8 +4,8 @@ import BasketScreen from "./basketScreen";
 import { BasketProvider } from "@/context/basketcontext";
 import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
-import checkoutScreen from "./cardInfoScreen";
 import { StripeProvider } from "@stripe/stripe-react-native";
+
 const Stack = createStackNavigator();
 
 export const Host = "http://192.168.1.108:8080";
@@ -35,11 +35,6 @@ export default function App() {
             name="Register"
             component={RegisterScreen}
             options={{ title: "Register", headerShown: true }}
-          />
-          <Stack.Screen
-            name="checkout"
-            component={checkoutScreen}
-            options={{ title: "Checkout", headerShown: true }}
           />
         </Stack.Navigator>
       </BasketProvider>
