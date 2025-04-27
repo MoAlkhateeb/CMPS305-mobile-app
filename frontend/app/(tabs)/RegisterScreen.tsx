@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Host } from ".";
+import { Host, setAccessToken } from ".";
 import { useBasket } from "@/context/basketcontext";
 
 export default function RegisterScreen({ navigation }: { navigation: any }) {
@@ -30,17 +30,19 @@ export default function RegisterScreen({ navigation }: { navigation: any }) {
     } else {
       await fetch(Host + "/register", {
         method: "POST",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
+        headers: { "Content-type": "application/json" },
         body: JSON.stringify({ username: username, password: password }),
       })
-        .then((res) => {
+        .then(async (res) => {
           if (res.status >= 200 && res.status <= 299) {
             return res.json();
           } else {
-            throw Error("invalid credentials");
+            console.log(await res.json());
+            throw Error(`invalid credentials`);
           }
         })
         .then((res) => {
+          setAccessToken(`${res.token_type} ${res.access_token}`);
           navigation.navigate("items");
         })
         .catch((err) => {
@@ -69,7 +71,7 @@ export default function RegisterScreen({ navigation }: { navigation: any }) {
         style={styles.text}
       ></TextInput>
       <TouchableHighlight onPress={register} style={styles.submit}>
-        <Text>Login</Text>
+        <Text>Register</Text>
       </TouchableHighlight>
     </View>
   );

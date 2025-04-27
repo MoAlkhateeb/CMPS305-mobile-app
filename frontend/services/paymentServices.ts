@@ -1,11 +1,19 @@
 import axios from "axios";
 import { useStripe } from "@stripe/stripe-react-native";
-import { Host } from "@/app/(tabs)";
+import { AccessToken, Host } from "@/app/(tabs)";
 export async function createIntent(amount: number) {
   return await axios
-    .post(Host + "/create-payment-intent", {
-      amount: amount,
-    })
+    .post(
+      Host + "/create-payment-intent",
+      {
+        amount: amount,
+      },
+      {
+        headers: {
+          Authorization: `${AccessToken}`,
+        },
+      }
+    )
     .then((response) => response.data)
     .catch((error) => {
       console.error("Error creating payment intent:", error);

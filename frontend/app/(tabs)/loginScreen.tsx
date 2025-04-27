@@ -9,7 +9,8 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { Host } from ".";
+import { Host, setAccessToken } from ".";
+import axios from "axios";
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
@@ -29,22 +30,27 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     } else if (password == "") {
       alert("Kindly provide a password!");
     } else {
-      await fetch(Host + "/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-        body: JSON.stringify({ username: username, password: password }),
-      })
-        .then((res) => {
+      await axios
+        .post(
+          Host + "/login",
+          { username: username, password: password },
+          {
+            headers: {
+              "Content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then(async (res) => {
           if (res.status >= 200 && res.status <= 299) {
-            return res.json();
+            return res.data;
           } else {
-            throw Error("invalid credentials");
+            const value = await res.data;
+            console.log(value);
+            throw Error(`invalid credentials`);
           }
         })
         .then((res) => {
-          
+          setAccessToken(`${res.token_type} ${res.access_token}`);
           navigation.navigate("items");
         })
         .catch((err) => {

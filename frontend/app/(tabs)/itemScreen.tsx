@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ItemCard } from "@/components/ItemCard";
 import { useBasket } from "@/context/basketcontext";
-import { Host } from ".";
+import { AccessToken, Host } from ".";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
@@ -19,7 +19,12 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    fetch(Host + "/items")
+    fetch(Host + "/items", {
+      method: "GET",
+      headers: {
+        Authorization: `${AccessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((json) => setItems(json))
       .catch((err) => console.log(err));
@@ -34,15 +39,16 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
         <Text>Basket</Text>
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.container}>
-        {items.map((item) => (
-          <ItemCard
-            key={item.id}
-            addToBasket={() => addToBasket(item)}
-            name={item.name}
-            description={item.description}
-            price={item.price}
-          />
-        ))}
+        {items &&
+          items.map((item) => (
+            <ItemCard
+              key={item.id}
+              addToBasket={() => addToBasket(item)}
+              name={item.name}
+              description={item.description}
+              price={item.price}
+            />
+          ))}
       </ScrollView>
     </SafeAreaView>
   );
