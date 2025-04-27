@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useStripe } from "@stripe/stripe-react-native";
-import { AccessToken, Host } from "@/app/(tabs)";
+import { Host } from "@/app/(tabs)";
+import { useAuth } from "@/context/authcontext";
+
 export async function createIntent(amount: number) {
+  const { accessToken } = useAuth();
   return await axios
     .post(
       Host + "/create-payment-intent",
@@ -10,7 +13,7 @@ export async function createIntent(amount: number) {
       },
       {
         headers: {
-          Authorization: `${AccessToken}`,
+          Authorization: `${accessToken}`,
         },
       }
     )

@@ -9,12 +9,14 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { Host, setAccessToken } from ".";
+import { Host } from ".";
 import axios from "axios";
+import { useAuth } from "@/context/authcontext";
 
 export default function LoginScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setAccessToken } = useAuth();
 
   const { clearBasket } = useBasket();
   const isFocused = useIsFocused();
@@ -44,8 +46,7 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
           if (res.status >= 200 && res.status <= 299) {
             return res.data;
           } else {
-            const value = await res.data;
-            console.log(value);
+            console.log(await res.data);
             throw Error(`invalid credentials`);
           }
         })

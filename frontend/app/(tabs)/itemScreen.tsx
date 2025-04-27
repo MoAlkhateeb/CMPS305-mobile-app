@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ItemCard } from "@/components/ItemCard";
 import { useBasket } from "@/context/basketcontext";
-import { AccessToken, Host } from ".";
+import { Host } from ".";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Float } from "react-native/Libraries/Types/CodegenTypes";
+import { useAuth } from "@/context/authcontext";
 
 interface Item {
   id: number;
@@ -17,16 +18,21 @@ interface Item {
 export default function ItemScreen({ navigation }: { navigation: any }) {
   const { addToBasket } = useBasket();
   const [items, setItems] = useState<Item[]>([]);
+  const { accessToken } = useAuth();
 
   useEffect(() => {
     fetch(Host + "/items", {
       method: "GET",
       headers: {
-        Authorization: `${AccessToken}`,
+        Authorization: `${accessToken}`,
       },
     })
       .then((res) => res.json())
-      .then((json) => setItems(json))
+      .then((json) => {
+        console.log(accessToken);
+        console.log(json);
+        setItems(json);
+      })
       .catch((err) => console.log(err));
   }, []);
 

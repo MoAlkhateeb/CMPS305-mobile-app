@@ -7,12 +7,14 @@ import {
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { Host, setAccessToken } from ".";
+import { Host } from ".";
 import { useBasket } from "@/context/basketcontext";
+import { useAuth } from "@/context/authcontext";
 
 export default function RegisterScreen({ navigation }: { navigation: any }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setAccessToken } = useAuth();
 
   const { clearBasket } = useBasket();
   const isFocused = useIsFocused();
