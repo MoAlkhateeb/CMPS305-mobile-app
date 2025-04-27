@@ -26,7 +26,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
   }, []);
 
   return (
-    <SafeAreaView>amount
+    <SafeAreaView>
       <TouchableOpacity
         style={styles.BasketButton}
         onPress={() => navigation.navigate("basket")}
@@ -41,7 +41,6 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
             name={item.name}
             description={item.description}
             price={item.price}
-            
           />
         ))}
       </ScrollView>
@@ -51,8 +50,7 @@ export default function ItemScreen({ navigation }: { navigation: any }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexWrap:"wrap"
-    
+    flexWrap: "wrap",
   },
   BasketButton: {
     backgroundColor: "#33cccc",

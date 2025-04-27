@@ -4,12 +4,11 @@ import BasketScreen from "./basketScreen";
 import { BasketProvider } from "@/context/basketcontext";
 import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
-import checkoutScreen from "./cardInfoScreen";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { useState } from "react";
 const Stack = createStackNavigator();
 
-export const Host = "http:/192.168.1.122:8080";
+export const Host = "https://cmps305-mobile-app-production.up.railway.app";
 export const paymentKey = process.env.EXPO_PUBLIC_STRIPE_KEY;
 
 export default function App() {
@@ -36,11 +35,6 @@ export default function App() {
             name="Register"
             component={RegisterScreen}
             options={{ title: "Register", headerShown: true }}
-          />
-          <Stack.Screen
-            name="checkout"
-            component={checkoutScreen}
-            options={{ title: "Checkout", headerShown: true }}
           />
         </Stack.Navigator>
       </BasketProvider>

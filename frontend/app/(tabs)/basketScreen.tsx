@@ -10,8 +10,12 @@ import {
 import { BasketItem } from "@/components/basketItem";
 import { useBasket } from "@/context/basketcontext";
 import { ScrollView } from "react-native-gesture-handler";
+import { createIntent } from "@/services/paymentServices";
+import { useStripe } from "@stripe/stripe-react-native";
+import { CustomerSheet } from "@stripe/stripe-react-native";
 
-export default function BasketScreen({ navigation } : {navigation : any}) {
+export default function BasketScreen({ navigation }: { navigation: any }) {
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const { basket, removeFromBasket } = useBasket();
   const screenWidth = Dimensions.get("window").width;
   let getTotal = () => {
@@ -19,7 +23,7 @@ export default function BasketScreen({ navigation } : {navigation : any}) {
     basket.forEach((item) => (total += item.amount * item.price));
     return total;
   };
-  
+
   return (
     <View style={styles.container}>
       {basket.length > 0 ? (
@@ -38,8 +42,20 @@ export default function BasketScreen({ navigation } : {navigation : any}) {
           </ScrollView>
           <View style={[styles.totalcontainer, { width: screenWidth }]}>
             <Text style={styles.totaltext}>Total:{getTotal() / 100}$</Text>
-            <TouchableOpacity style={styles.checkoutBtn}>
-              onPress = {navigation.navigate('cardInfo')}
+            <TouchableOpacity
+              style={styles.checkoutBtn}
+              onPress={async () => {
+                const clientSecret: string = await createIntent(getTotal());
+                console.log("clientsecret", clientSecret);
+                const b = await initPaymentSheet({
+                  paymentIntentClientSecret: clientSecret,
+                  merchantDisplayName: "kofta",
+                });
+                console.log(b);
+                const a = await presentPaymentSheet();
+                console.log(a);
+              }}
+            >
               <Text style={styles.checkoutText}>Proceed to Checkout</Text>
             </TouchableOpacity>
           </View>
@@ -75,19 +91,19 @@ const styles = StyleSheet.create({
     fontWeight: 900,
     fontSize: 20,
   },
-  checkoutText:{
+  checkoutText: {
     fontWeight: 800,
-    fontSize:15,
-    padding:2,
-    color:"#fff"
+    fontSize: 15,
+    padding: 2,
+    color: "#fff",
   },
-  checkoutBtn:{
-    width:200,
+  checkoutBtn: {
+    width: 200,
     backgroundColor: "#00cc99",
     borderWidth: 1,
     borderRadius: 5,
-    justifyContent:"center",
-    alignItems:"center",
-    padding:4,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 4,
   },
 });
