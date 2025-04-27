@@ -41,6 +41,7 @@ class TokenRequest(BaseModel):
 
 
 class ItemSchema(BaseModel):
+    id: int
     name: str
     price: float
     description: str
