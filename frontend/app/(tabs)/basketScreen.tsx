@@ -1,18 +1,17 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   View,
   StyleSheet,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { BasketItem } from "@/components/basketItem";
 import { useBasket } from "@/context/basketcontext";
 import { ScrollView } from "react-native-gesture-handler";
-import { createIntent } from "@/services/paymentServices";
-import { useStripe } from "@stripe/stripe-react-native";
-import { CustomerSheet } from "@stripe/stripe-react-native";
+import { PaymentSheet, useStripe } from "@stripe/stripe-react-native";
+import { confirmPayment, createIntent } from "@/services/paymentServices";
 
 export default function BasketScreen({ navigation }: { navigation: any }) {
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -70,7 +69,7 @@ export default function BasketScreen({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 5,
     backgroundColor: "#f9f9f9",
   },
   title: {

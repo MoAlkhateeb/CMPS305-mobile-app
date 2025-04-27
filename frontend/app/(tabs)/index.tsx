@@ -5,7 +5,7 @@ import { BasketProvider } from "@/context/basketcontext";
 import LoginScreen from "./loginScreen";
 import RegisterScreen from "./RegisterScreen";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { useState } from "react";
+
 const Stack = createStackNavigator();
 
 export const Host = "https://cmps305-mobile-app-production.up.railway.app";
