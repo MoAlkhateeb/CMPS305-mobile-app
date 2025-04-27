@@ -40,8 +40,14 @@ class TokenRequest(BaseModel):
     token: str
 
 
-class ItemSchema(BaseModel):
+class ItemOut(BaseModel):
     id: int
+    name: str
+    price: float
+    description: str
+
+
+class ItemSchema(BaseModel):
     name: str
     price: float
     description: str
@@ -160,7 +166,7 @@ def create_item(item_data: ItemSchema):
 
 
 @app.get("/items")
-def items() -> list[ItemSchema]:
+def items() -> list[ItemOut]:
     query = select(Item)
     items = session.execute(query).all()
     return [item[0] for item in items]
