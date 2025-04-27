@@ -30,16 +30,19 @@ export const BasketProvider: React.FC<{ children: React.ReactNode }> = ({
   const [basket, setBasket] = useState<BasketItemInterface[]>([]);
 
   const addToBasket = (item: Item) => {
-    let basketItem = {
-      id: item.id,
-      name: item.name,
-      description: item.description,
-      price: item.price,
-      amount: 1,
-    };
-    let existingItem = basket.find((basketItem) => basketItem.id == item.id);
-    if (existingItem == null) setBasket((prev) => [...prev, basketItem]);
-    else existingItem.amount++;
+    console.log("item: ", item);
+    let existingItem = basket.find((basketItem) => basketItem.id === item.id);
+    if (existingItem == null) {
+      let basketItem = {
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        amount: 1,
+      };
+      console.log("creating new item:", basketItem);
+      setBasket((prev) => [...prev, basketItem]);
+    } else existingItem.amount++;
   };
   const removeFromBasket = (name: string) => {
     let item = basket.find((item) => item.name == name);

@@ -23,14 +23,6 @@ export default function BasketScreen({ navigation }: { navigation: any }) {
     return total;
   };
 
-  const initializePaymentSheet = async (client_secret: string) => {
-    const { error } = await initPaymentSheet({
-      paymentIntentClientSecret: client_secret,
-      merchantDisplayName: "Test",
-    });
-    if (error) Alert.alert(`error in stripe: ${error.code}`);
-  };
-
   return (
     <View style={styles.container}>
       {basket.length > 0 ? (
@@ -52,15 +44,15 @@ export default function BasketScreen({ navigation }: { navigation: any }) {
             <TouchableOpacity
               style={styles.checkoutBtn}
               onPress={async () => {
-                const client_secret = await createIntent(getTotal());
-                await initializePaymentSheet(client_secret);
-                const { error } = await presentPaymentSheet();
-                if (error) {
-                  Alert.alert(`Error code: ${error.code}`, error.message);
-                } else {
-                  await confirmPayment(client_secret);
-                  Alert.alert("Success", "Your order is confirmed");
-                }
+                const clientSecret: string = await createIntent(getTotal());
+                console.log("clientsecret", clientSecret);
+                const b = await initPaymentSheet({
+                  paymentIntentClientSecret: clientSecret,
+                  merchantDisplayName: "kofta",
+                });
+                console.log(b);
+                const a = await presentPaymentSheet();
+                console.log(a);
               }}
             >
               <Text style={styles.checkoutText}>Proceed to Checkout</Text>

@@ -8,7 +8,7 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 
 const Stack = createStackNavigator();
 
-export const Host = "http://192.168.1.108:8080";
+export const Host = "https://cmps305-mobile-app-production.up.railway.app";
 export const paymentKey = process.env.EXPO_PUBLIC_STRIPE_KEY;
 
 export default function App() {

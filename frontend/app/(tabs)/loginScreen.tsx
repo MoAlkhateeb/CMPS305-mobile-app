@@ -31,7 +31,9 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
     } else {
       await fetch(Host + "/login", {
         method: "POST",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
         body: JSON.stringify({ username: username, password: password }),
       })
         .then((res) => {
@@ -42,6 +44,7 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
           }
         })
         .then((res) => {
+          
           navigation.navigate("items");
         })
         .catch((err) => {
