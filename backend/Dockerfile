@@ -24,6 +24,4 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 EXPOSE 8000
 
-RUN ["python3", "models.py"]
-
 ENTRYPOINT ["fastapi", "run", "main.py", "--host", "0.0.0.0", "--port", "8080"]
